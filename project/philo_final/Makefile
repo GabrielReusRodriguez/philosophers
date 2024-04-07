@@ -1,12 +1,16 @@
 NAME=philo
 #CDEBUG = -g3 -fsanitize=address
-#CDEBUG = -g3
-#PTHREAD_FLAG = -lpthread
+CDEBUG = -g3
+PTHREAD_FLAG = -pthread
 CFLAGS=-Wall -Wextra -Werror -MMD -MP ${CDEBUG} ${PTHREAD_FLAG}
 
 SRC_DIR=.
 OBJ_DIR=./obj
 INC_DIR=./inc
+
+
+#BONUS_SRC_DIR=./bonus_src
+#BONUS_INC_DIR=./bonus_inc
 
 SRC_FILES=	ft_args.c				\
 			ft_fork.c				\
