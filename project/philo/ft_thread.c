@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:19:28 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/04 23:42:09 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/07 22:54:37 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,8 @@ void	ft_thread_printf(t_philosopher *philo, const char *str, \
 			t_timestamp time)
 {
 	pthread_mutex_lock(&philo->log->mutex);
-	if (ft_mutex_bvalue_get(philo->end) == FALSE)
-	{
-		printf("%llu", time);
-		printf(" %d ", philo->number);
-		printf("%s\n", str);
-	}
+	printf("%llu", time);
+	printf(" %d ", philo->number);
+	printf("%s\n", str);
 	pthread_mutex_unlock(&philo->log->mutex);
 }

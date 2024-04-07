@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sleep.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 23:24:21 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/04 22:59:55 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/07 19:35:41 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "ft_timestamp.h"
 
+/*
 int	ft_sleep(unsigned long millisecs)
 {
 	t_timestamp	init_time;
@@ -29,4 +30,9 @@ int	ft_sleep(unsigned long millisecs)
 		now = ft_timestamp_get();
 	}
 	return (0);
+}
+*/
+int	ft_sleep(unsigned long millisecs)
+{
+	return (usleep(millisecs * 1000));
 }

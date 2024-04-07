@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/04 23:45:32 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/07 23:00:54 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,24 @@ int	ft_main_check_philo(t_philosopher *philo, t_bool *bn_meals)
 	t_rules		rules;
 
 	rules = philo->rules;
-	number_meals = ft_mutex_meal_get_num(&philo->meals);
+	pthread_mutex_lock(&philo->meals.mutex);
+	number_meals = philo->meals.num_meals;
+	last_meal_time = philo->meals.timestamp;
 	if (rules.number_eats > 0 && number_meals >= rules.number_eats)
 		*bn_meals = TRUE;
 	else
 		*bn_meals = FALSE;
 	now = ft_timestamp_get();
-	last_meal_time = ft_mutex_meal_get_time(&philo->meals);
 	if (now - last_meal_time >= rules.time_to_die)
 	{
 		ft_thread_printf(philo, "died", now - philo->start_time);
-		ft_mutex_bvalue_set(philo->end, TRUE);
+		pthread_mutex_lock(&philo->end->mutex);
+		philo->end->value = TRUE;
+		pthread_mutex_unlock(&philo->end->mutex);
+		pthread_mutex_unlock(&philo->meals.mutex);
 		return (1);
 	}
+	pthread_mutex_unlock(&philo->meals.mutex);
 	return (0);
 }
 
@@ -67,7 +72,7 @@ void	ft_main_check_simulation(t_table *table)
 			return ;
 		bn_meals = bn_meals && b_philo_n_meal;
 		i++;
-		ft_thread_sleep(500);
+		ft_thread_sleep(100);
 	}
 	if (table->rules.number_eats > 0 && bn_meals == TRUE)
 		ft_mutex_bvalue_set(&table->end, TRUE);

@@ -16,7 +16,6 @@ SRC_FILES=	ft_args.c				\
 			ft_fork.c				\
 			ft_mutex_bflag.c		\
 			ft_mutex_meal.c			\
-			ft_mutex_meal2.c		\
 			ft_philosopher.c		\
 			ft_philosopher2.c		\
 			ft_philosopher3.c		\

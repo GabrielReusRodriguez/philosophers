@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 20:58:06 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/04 23:48:01 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/07 22:57:11 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ static int	ft_philosopher_pickup_forks(t_philosopher *philo)
 
 	ft_fork_pickup(philo->l_fork, philo->number, 1);
 	timestamp = ft_timestamp_get();
-	ft_thread_printf(philo, "has taken a fork", timestamp - philo->start_time);
+	pthread_mutex_lock(&philo->end->mutex);
+	if (philo->end->value == FALSE)
+		ft_thread_printf(philo, "has taken a fork", \
+			timestamp - philo->start_time);
+	pthread_mutex_unlock(&philo->end->mutex);
 	if (philo->total == 1)
 	{
 		ft_sleep(philo->rules.time_to_die);
@@ -30,8 +34,11 @@ static int	ft_philosopher_pickup_forks(t_philosopher *philo)
 	}
 	ft_fork_pickup(philo->r_fork, philo->number, 2);
 	timestamp = ft_timestamp_get();
-	ft_thread_printf(philo, "has taken a fork", \
-		timestamp - philo->start_time);
+	pthread_mutex_lock(&philo->end->mutex);
+	if (philo->end->value == FALSE)
+		ft_thread_printf(philo, "has taken a fork", \
+			timestamp - philo->start_time);
+	pthread_mutex_unlock(&philo->end->mutex);
 	return (0);
 }
 
@@ -40,17 +47,27 @@ void	ft_philosopher_eat(t_philosopher *philo)
 {
 	t_timestamp	timestamp;
 
-	if (ft_mutex_bvalue_get(philo->end) == FALSE)
+	pthread_mutex_lock(&philo->end->mutex);
+	if (philo->end->value == FALSE)
 	{
+		pthread_mutex_unlock(&philo->end->mutex);
 		philo->status = PHILO_STATUS_EAT;
 		if (ft_philosopher_pickup_forks(philo) == 1)
 			return ;
-		if (ft_mutex_bvalue_get(philo->end) == FALSE)
+		timestamp = ft_timestamp_get();
+		pthread_mutex_lock(&philo->end->mutex);
+		if (philo->end->value == FALSE)
 		{
-			timestamp = ft_timestamp_get();
+			pthread_mutex_unlock(&philo->end->mutex);
 			ft_mutex_meal_update(&philo->meals, timestamp);
+			pthread_mutex_lock(&philo->end->mutex);
 			ft_thread_printf(philo, "is eating", timestamp - philo->start_time);
+			pthread_mutex_unlock(&philo->end->mutex);
+			ft_sleep(philo->rules.time_to_eat);
+			ft_fork_drop(philo->r_fork);
+			ft_fork_drop(philo->l_fork);
 		}
-		ft_sleep(philo->rules.time_to_eat);
+		else
+			pthread_mutex_unlock(&philo->end->mutex);
 	}
 }
