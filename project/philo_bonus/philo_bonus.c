@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/07 23:04:52 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/07 23:22:45 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <pthread.h>
 
 #include "ft_args.h"
-#include "ft_thread.h"
 #include "ft_philosopher.h"
 
 //https://github.com/DeRuina/philosophers/blob/main/src/threads.c

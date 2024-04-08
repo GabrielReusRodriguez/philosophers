@@ -6,26 +6,31 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:53:56 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/02 21:08:23 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/09 00:16:41 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
+#include <fcntl.h>
+#include <semaphore.h>
 #include "ft_table.h"
 #include "ft_args.h"
+#include "ft_semaphores.h"
 
 void	ft_table_destroy(t_table *table)
 {
-	if (table->forks_set.forks != NULL)
-	{
-		ft_forks_destroy(&table->forks_set);
-	}
 	if (table->philosophers_set.philosophers != NULL)
 	{
 		ft_philosophers_destroy(&table->philosophers_set);
 	}
-	pthread_mutex_destroy(&table->log.mutex);
-	pthread_mutex_destroy(&table->end.mutex);
+    sem_close(table->sem_console);
+    sem_unlink(SEMAPHOR_CONSOLE);
+    sem_close(table->sem_end);
+    sem_unlink(SEMAPHOR_DEAD);
+    sem_close(table->sem_meal);
+    sem_unlink(SEMAPHOR_MEALS);
+    sem_close(table->sem_forks);
+    sem_unlink(SEMAPHOR_FORKS);
+
 }
 
 /*
@@ -41,10 +46,12 @@ t_table	ft_table_init(t_args args)
 	t_table	table;
 
 	table.rules = ft_rules_init(args);
-	table.forks_set = ft_forks_init(args.num_philo);
-	table.philosophers_set = ft_philosophers_init(args, table.forks_set, \
+    table.num_forks = args.num_philo;
+	table.philosophers_set = ft_philosophers_init(args, \
 								table.rules);
-	table.end = ft_mutex_bvalue_init(FALSE);
-	table.log = ft_mutex_bvalue_init(TRUE);
+    table.sem_console = sem_open(SEMAPHOR_CONSOLE, O_CREAT, 0644, 1);
+    table.sem_meal = sem_open(SEMAPHOR_MEALS, O_CREAT, 0644, args.num_philo);
+    table.sem_forks = sem_open(SEMAPHOR_FORKS, O_CREAT, 0644, args.num_philo);
+    table.sem_end = sem_open(SEMAPHOR_DEAD, O_CREAT, 0644, 1);                    
 	return (table);
 }
