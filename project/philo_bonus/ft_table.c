@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:53:56 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/09 00:16:41 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/09 00:42:39 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,9 @@ void	ft_table_destroy(t_table *table)
 		ft_philosophers_destroy(&table->philosophers_set);
 	}
     sem_close(table->sem_console);
-    sem_unlink(SEMAPHOR_CONSOLE);
     sem_close(table->sem_end);
-    sem_unlink(SEMAPHOR_DEAD);
     sem_close(table->sem_meal);
-    sem_unlink(SEMAPHOR_MEALS);
     sem_close(table->sem_forks);
-    sem_unlink(SEMAPHOR_FORKS);
 
 }
 
@@ -50,8 +46,12 @@ t_table	ft_table_init(t_args args)
 	table.philosophers_set = ft_philosophers_init(args, \
 								table.rules);
     table.sem_console = sem_open(SEMAPHOR_CONSOLE, O_CREAT, 0644, 1);
+    sem_unlink(SEMAPHOR_CONSOLE);
     table.sem_meal = sem_open(SEMAPHOR_MEALS, O_CREAT, 0644, args.num_philo);
+    sem_unlink(SEMAPHOR_MEALS);
     table.sem_forks = sem_open(SEMAPHOR_FORKS, O_CREAT, 0644, args.num_philo);
+    sem_unlink(SEMAPHOR_FORKS);
     table.sem_end = sem_open(SEMAPHOR_DEAD, O_CREAT, 0644, 1);                    
+    sem_unlink(SEMAPHOR_DEAD);
 	return (table);
 }
