@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/09 08:50:38 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/09 22:23:54 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 #include "ft_philosopher.h"
 #include "ft_table.h"
 #include "ft_log.h"
+#include "ft_threads.h"
 
 //https://github.com/DeRuina/philosophers/blob/main/src/threads.c
-
+/*
 int	ft_main_check_philo(t_philosopher *philo, t_bool *bn_meals)
 {
 	t_timestamp	now;
@@ -63,13 +64,46 @@ void	ft_main_check_simulation(t_table *table)
 	if (table->rules.number_eats > 0 && bn_meals == TRUE)
 		ft_mutex_bvalue_set(&table->end, TRUE);
 }
+*/
+
+void    *ft_main_check_deads(void *arg)
+{
+	t_table *table;
+
+	table = (t_table *)arg;
+	sem_wait(SEMAPHOR_DEAD);
+	ft_table_destroy(table);
+	exit(EXIT_SUCCESS);
+}
+
+void    *ft_main_check_meals(void *arg)
+{
+	t_table *table;
+	size_t  i;
+
+	table = (t_table *)arg;
+	i = 0;
+	while (i < table->philosophers_set.total)
+	{
+		sem_wait(SEMAPHOR_MEALS);
+		i++;
+	}
+	ft_table_destroy(table);
+	exit(EXIT_SUCCESS);
+
+}
 
 void	ft_main_run_simulation(t_table *table)
 {
-	while (ft_mutex_bvalue_get(&table->end) == FALSE)
-	{
-		ft_main_check_simulation(table);
-	}
+	
+	pthread_t   deads_thread;
+	pthread_t   meals_thread;
+
+	pthread_create(&deads_thread, NULL, ft_main_check_deads, table);
+	pthread_detach(&deads_thread);
+	pthread_create(&meals_thread, NULL, ft_main_check_meals, table);
+	pthread_detach(&meals_thread);
+	sem_wait(table->sem_end);
 }
 
 int	ft_main_check_init(t_table *table)

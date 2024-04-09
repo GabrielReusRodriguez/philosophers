@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 23:12:05 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/08 23:53:27 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/09 22:19:43 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define SEMAPHOR_FORKS     "semaphor_forks"
 # define SEMAPHOR_DEAD      "semaphor_dead"
+# define SEMAPHOR_END       "semaphor_end"
 # define SEMAPHOR_MEALS     "semaphor_meals"
 # define SEMAPHOR_CONSOLE   "semaphor_console"
 

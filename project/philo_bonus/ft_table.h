@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:50:54 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/08 23:45:23 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/09 22:18:38 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_table
 	t_rules				rules;
 	t_timestamp			start_time;
     sem_t               *sem_end;
+    sem_t               *sem_dead;
     sem_t               *sem_meal;
     sem_t               *sem_console;
     sem_t               *sem_forks;
