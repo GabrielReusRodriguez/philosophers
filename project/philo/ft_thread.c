@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_thread.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:19:28 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/07 22:54:37 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/09 08:44:53 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,4 @@ int	ft_thread_join_threads(t_philosopher_set *philo)
 		i++;
 	}
 	return (0);
-}
-
-/*
-	We print at threads with this function. 
-	First we block the log (only one thread can write)
-	Then we check that the simulation is NOT over.
-*/
-void	ft_thread_printf(t_philosopher *philo, const char *str, \
-			t_timestamp time)
-{
-	pthread_mutex_lock(&philo->log->mutex);
-	printf("%llu", time);
-	printf(" %d ", philo->number);
-	printf("%s\n", str);
-	pthread_mutex_unlock(&philo->log->mutex);
 }

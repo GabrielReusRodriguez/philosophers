@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/07 23:00:54 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/09 08:48:10 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "ft_args.h"
 #include "ft_thread.h"
 #include "ft_philosopher.h"
+#include "ft_log.h"
 
 /*
 	This function checks death condition and number of meals
@@ -41,7 +42,7 @@ int	ft_main_check_philo(t_philosopher *philo, t_bool *bn_meals)
 	now = ft_timestamp_get();
 	if (now - last_meal_time >= rules.time_to_die)
 	{
-		ft_thread_printf(philo, "died", now - philo->start_time);
+		ft_log(philo, "died", now - philo->start_time);
 		pthread_mutex_lock(&philo->end->mutex);
 		philo->end->value = TRUE;
 		pthread_mutex_unlock(&philo->end->mutex);

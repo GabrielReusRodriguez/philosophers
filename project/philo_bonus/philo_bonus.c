@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/07 23:22:45 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/09 08:50:38 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 
 #include "ft_args.h"
 #include "ft_philosopher.h"
+#include "ft_table.h"
+#include "ft_log.h"
 
 //https://github.com/DeRuina/philosophers/blob/main/src/threads.c
 
@@ -34,7 +35,7 @@ int	ft_main_check_philo(t_philosopher *philo, t_bool *bn_meals)
 	last_meal_time = ft_mutex_meal_get_time(&philo->meals);
 	if (now - last_meal_time >= rules.time_to_die)
 	{
-		ft_thread_printf(philo, "died", now - philo->start_time);
+		ft_log(philo, "died", now - philo->start_time);
 		ft_mutex_bvalue_set(philo->end, TRUE);
 		return (1);
 	}
