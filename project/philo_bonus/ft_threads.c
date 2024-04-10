@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 00:21:52 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/09 00:37:32 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/11 00:10:03 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int ft_threads_check_philo_dead(t_philosopher *philo)
 
 int ft_threads_check_philo_meal(t_philosopher *philo)
 {
-    size_t  num_meals;
-
-    num_meals = 0;
     while(TRUE)
     {
         if (philo->meals.num_meals >= philo->rules.number_eats)
@@ -58,10 +55,12 @@ int ft_threads_check_meals(t_table *table)
         i++;
     }
     //call to kill  pids function
+    return (0);
 }
 
 int ft_threads_check_deads(t_table *table)
 {
     sem_wait(table->sem_end);
     //call to kill  pids function
+    return (0);
 }

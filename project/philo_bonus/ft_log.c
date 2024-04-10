@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_semaphores.h                                    :+:      :+:    :+:   */
+/*   ft_log.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 23:12:05 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/10 23:42:06 by gabriel          ###   ########.fr       */
+/*   Created: 2024/04/10 23:58:47 by gabriel           #+#    #+#             */
+/*   Updated: 2024/04/11 00:01:37 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SEMAPHORES_H
-# define FT_SEMAPHORES_H
+#include <semaphore.h>
+#include <stdio.h>
+#include "ft_philosopher.h"
+#include "ft_timestamp.h"
 
-# define SEMAPHOR_FORKS     "semaphor_forks"
-# define SEMAPHOR_DEAD      "semaphor_dead"
-# define SEMAPHOR_END       "semaphor_end"
-# define SEMAPHOR_MEALS     "semaphor_meals"
-# define SEMAPHOR_CONSOLE   "semaphor_console"
+void    ft_log(t_philosopher *philo, const char *msg , t_timestamp time)
+{
+	sem_wait(philo->sem_console);
+	printf("%llu", time);
+	printf(" %d ", philo->number);
+	printf("%s\n", msg);
+	sem_post(philo->sem_console);
 
-sem_t	*ft_semaphore_create(char *name, int value);
-
-#endif
+}

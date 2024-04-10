@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosopher3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 20:58:06 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/09 08:49:01 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/11 00:08:56 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <semaphore.h>
 #include "ft_philosopher.h"
 #include "ft_sleep.h"
+#include "ft_log.h"
 
 /* Philosopher takes A fork.*/
 static int	ft_philosopher_pickup_forks(t_philosopher *philo)
@@ -50,6 +51,8 @@ void	ft_philosopher_eat(t_philosopher *philo)
 	ft_log(philo, "is eating", timestamp - philo->start_time);
 	//ft_thread_printf(philo, "is eating", timestamp - philo->start_time);
 	ft_sleep(philo->rules.time_to_eat);
-	sem_post(philo->r_fork);
-	sem_post(philo->l_fork);
+    philo->l_fork = FALSE;
+	sem_post(philo->sem_forks);
+    philo->r_fork = FALSE;
+	sem_post(philo->sem_forks);
 }

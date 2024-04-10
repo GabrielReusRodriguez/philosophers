@@ -9,25 +9,23 @@ OBJ_DIR=./obj
 INC_DIR=./inc
 
 SRC_FILES=	ft_args.c				\
-			ft_fork.c				\
-			ft_mutex_bflag.c		\
-			ft_mutex_meal.c			\
-			ft_mutex_meal2.c		\
+			ft_log.c				\
 			ft_philosopher.c		\
 			ft_philosopher2.c		\
 			ft_philosopher3.c		\
 			ft_rules.c				\
+			ft_semaphores.c			\
 			ft_sleep.c				\
 			ft_table.c				\
 			ft_timestamp.c			\
-			ft_thread.c				\
+			ft_threads.c			\
 			ft_utils_atoi.c			\
 			ft_utils_ctoi.c			\
 			ft_utils_contains_num.c	\
 			ft_utils_isdigit.c		\
 			ft_utils_print.c		\
 			ft_utils_strlen.c		\
-			philo.c
+			philo_bonus.c
 
 #BONUS_SRC_FILES=	
 

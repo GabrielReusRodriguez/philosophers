@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/09 22:23:54 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/11 00:14:03 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void    *ft_main_check_deads(void *arg)
 	t_table *table;
 
 	table = (t_table *)arg;
-	sem_wait(SEMAPHOR_DEAD);
+	sem_wait(table->sem_dead);
 	ft_table_destroy(table);
 	exit(EXIT_SUCCESS);
 }
@@ -85,7 +85,7 @@ void    *ft_main_check_meals(void *arg)
 	i = 0;
 	while (i < table->philosophers_set.total)
 	{
-		sem_wait(SEMAPHOR_MEALS);
+		sem_wait(table->sem_meal);
 		i++;
 	}
 	ft_table_destroy(table);
@@ -100,16 +100,16 @@ void	ft_main_run_simulation(t_table *table)
 	pthread_t   meals_thread;
 
 	pthread_create(&deads_thread, NULL, ft_main_check_deads, table);
-	pthread_detach(&deads_thread);
+	pthread_detach(deads_thread);
 	pthread_create(&meals_thread, NULL, ft_main_check_meals, table);
-	pthread_detach(&meals_thread);
+	pthread_detach(meals_thread);
 	sem_wait(table->sem_end);
 }
 
 int	ft_main_check_init(t_table *table)
 {
 	if (table->philosophers_set.philosophers == NULL || \
-			table->forks_set.forks == NULL)
+			table->num_forks <= 0)
 	{
 		ft_table_destroy(table);
 		return (-1);
@@ -130,9 +130,9 @@ int	main(int argc, char **argv)
 	table = ft_table_init(args);
 	if (ft_main_check_init(&table) == -1)
 		return (EXIT_FAILURE);
-	ft_fork_create_proc(&table);
+//	ft_fork_create_proc(&table);
 	ft_main_run_simulation(&table);
-	ft_fork_wait_threads(&table.philosophers_set);
+//	ft_fork_wait_threads(&table.philosophers_set);
 	ft_table_destroy(&table);
 	return (0);
 }
