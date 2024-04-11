@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "ft_threads.h": "c",
+        "ft_philosopher.h": "c"
+    }
+}

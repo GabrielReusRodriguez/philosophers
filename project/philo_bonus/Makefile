@@ -9,6 +9,7 @@ OBJ_DIR=./obj
 INC_DIR=./inc
 
 SRC_FILES=	ft_args.c				\
+			ft_forkproc.c			\
 			ft_log.c				\
 			ft_philosopher.c		\
 			ft_philosopher2.c		\

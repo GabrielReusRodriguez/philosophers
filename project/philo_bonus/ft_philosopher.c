@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosopher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/09 08:34:36 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/11 21:34:00 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,10 @@ t_philosopher_set	ft_philosophers_init(t_args args, \
 	return (philo);
 }
 
-
 void	ft_philosopher_destroy(t_philosopher *philosopher)
 {
 	sem_close(philosopher->sem_console);
-	sem_close(philosopher->sem_end);
+	sem_close(philosopher->sem_dead);
 	sem_close(philosopher->sem_forks);
 	sem_close(philosopher->sem_meal);
 }

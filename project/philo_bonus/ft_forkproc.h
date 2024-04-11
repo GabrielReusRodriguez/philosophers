@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_log.c                                           :+:      :+:    :+:   */
+/*   ft_forkproc.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 23:58:47 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/11 21:34:27 by gabriel          ###   ########.fr       */
+/*   Created: 2024/04/11 20:19:45 by gabriel           #+#    #+#             */
+/*   Updated: 2024/04/11 20:39:14 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <semaphore.h>
-#include <stdio.h>
-#include "ft_philosopher.h"
-#include "ft_timestamp.h"
+#ifndef FT_FORKPROC_H
+# define FT_FORKPROC_H
 
-void    ft_log(t_philosopher *philo, const char *msg , t_timestamp time)
-{
-	sem_wait(philo->sem_console);
-	printf("%llu", time);
-	printf(" %d ", philo->number);
-	printf("%s\n", msg);
-	sem_post(philo->sem_console);
+# include "ft_table.h"
+# include  "ft_philosopher.h"
 
-}
+int	ft_forkproc_create_proc(t_table *table);
+int	ft_forkproc_wait(t_philosopher_set philosophers);
+int	ft_forkproc_killall(t_philosopher_set philosophers);
+
+
+#endif

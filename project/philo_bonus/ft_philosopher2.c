@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/11 00:06:46 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/11 20:55:33 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,25 @@
 
 static void	ft_philosopher_do_state(t_philosopher *philo)
 {
-	if (philo->status == PHILO_STATUS_INIT || \
-			philo->status == PHILO_STATUS_THINK)
-	{
-		ft_philosopher_eat(philo);
-		return ;
-	}
-	if (philo->status == PHILO_STATUS_EAT)
-	{
-		ft_philosopher_sleep(philo);
-		return ;
-	}
-	if (philo->status == PHILO_STATUS_SLEEP)
-	{
-		ft_philosopher_think(philo);
-		return ;
-	}
+    while(TRUE)
+    {
+	    if (philo->status == PHILO_STATUS_INIT || \
+		    	philo->status == PHILO_STATUS_THINK)
+	    {
+		    ft_philosopher_eat(philo);
+		    return ;
+	    }
+	    if (philo->status == PHILO_STATUS_EAT)
+	    {
+		    ft_philosopher_sleep(philo);
+		    return ;
+	    }
+	    if (philo->status == PHILO_STATUS_SLEEP)
+	    {
+		    ft_philosopher_think(philo);
+		    return ;
+	    }
+    }
 }
 
 void	*ft_philosopher_life(void *arg)

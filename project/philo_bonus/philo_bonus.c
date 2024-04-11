@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/11 00:14:03 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/11 21:19:29 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "ft_table.h"
 #include "ft_log.h"
 #include "ft_threads.h"
+#include "ft_forkproc.h"
 
 //https://github.com/DeRuina/philosophers/blob/main/src/threads.c
 /*
@@ -104,6 +105,7 @@ void	ft_main_run_simulation(t_table *table)
 	pthread_create(&meals_thread, NULL, ft_main_check_meals, table);
 	pthread_detach(meals_thread);
 	sem_wait(table->sem_end);
+	ft_forkproc_killall(table->philosophers_set);
 }
 
 int	ft_main_check_init(t_table *table)
@@ -130,9 +132,12 @@ int	main(int argc, char **argv)
 	table = ft_table_init(args);
 	if (ft_main_check_init(&table) == -1)
 		return (EXIT_FAILURE);
-//	ft_fork_create_proc(&table);
+	printf("PRe-create fork\n");
+	ft_forkproc_create_proc(&table);
+	printf("PRe-run\n");
 	ft_main_run_simulation(&table);
-//	ft_fork_wait_threads(&table.philosophers_set);
+	printf("PRe-wait\n");
+	ft_forkproc_wait(table.philosophers_set);
 	ft_table_destroy(&table);
 	return (0);
 }
