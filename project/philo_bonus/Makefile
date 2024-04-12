@@ -20,6 +20,7 @@ SRC_FILES=	ft_args.c				\
 			ft_table.c				\
 			ft_timestamp.c			\
 			ft_threads.c			\
+			ft_threads2.c			\
 			ft_utils_atoi.c			\
 			ft_utils_ctoi.c			\
 			ft_utils_contains_num.c	\

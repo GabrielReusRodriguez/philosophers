@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_threads.h                                       :+:      :+:    :+:   */
+/*   ft_threads2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 00:17:17 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 12:02:05 by greus-ro         ###   ########.fr       */
+/*   Created: 2024/04/12 12:02:48 by greus-ro          #+#    #+#             */
+/*   Updated: 2024/04/12 12:14:08 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_THREADS_H
-# define FT_THREADS_H
+#include <pthread.h>
 
-# include "ft_table.h"
-# include "ft_philosopher.h"
-
-void    *ft_threads_check_philo_dead(void *args);
-void    *ft_threads_check_philo_meal(void *args);
-void    *ft_threads_check_philo_dead(void *args);
-void    *ft_threads_check_philo_meal(void * args);
-int     ft_threads_createthread(pthread_t *id, void * (*func)(void *arg), void * arg);
-
-
-#endif
+int	ft_threads_createthread(pthread_t *id, void * (*func)(void *arg), void * arg)
+{
+	if (pthread_create(id, NULL, func, arg) < 0)
+		return (-1);
+	if (pthread_detach(*id) < 0)
+		return (-1);	
+	return (0);
+}

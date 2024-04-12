@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 00:21:52 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 11:49:54 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:11:08 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,6 @@
 #include "ft_philosopher.h"
 #include "ft_table.h"
 #include "ft_timestamp.h"
-
-/*
-int ft_threads_check_philo_dead(t_philosopher *philo)
-{
-	t_timestamp now;
-	
-	while(TRUE)
-	{
-		now = ft_timestamp_get();
-		if (now - philo->meals.timestamp >= philo->rules.time_to_die)
-		{
-			sem_post(philo->sem_end);
-			exit(EXIT_SUCCESS);
-		}
-	}
-	return (0);
-}
-*/
 
 void    *ft_threads_check_philo_dead(void *args)
 {
@@ -67,20 +49,6 @@ void    *ft_threads_check_philo_meal(void * args)
 	}
 	return (NULL);
 }
-/*
-int ft_threads_check_philo_meal(t_philosopher *philo)
-{
-	while(TRUE)
-	{
-		if (philo->meals.num_meals >= philo->rules.number_eats)
-		{
-			sem_post(philo->sem_meal);
-			break;
-		}
-	}
-	return (0);
-}
-*/
 
 void *	ft_threads_check_meals(void * args)
 {
@@ -94,7 +62,6 @@ void *	ft_threads_check_meals(void * args)
 		sem_wait(table->sem_meal);
 		i++;
 	}
-	//call to kill  pids function
 	return (NULL);
 }
 
@@ -104,6 +71,5 @@ void	*ft_threads_check_deads(void *args)
 
 	table = (t_table *)args;
 	sem_wait(table->sem_end);
-	//call to kill  pids function
 	return (NULL);
 }
