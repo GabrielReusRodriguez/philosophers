@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:21:09 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 13:47:21 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:18:31 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "ft_forkproc.h"
 #include "ft_philosopher.h"
 #include "ft_threads.h"
+#include "ft_sleep.h"
 
 static void	ft_forkproc_copy_semaphores(t_table *table, t_philosopher *philo)
 {
@@ -65,6 +66,8 @@ int	ft_forkproc_create_proc(t_table *table)
 		philo = table->philosophers_set.philosophers + i;
 		philo->start_time = table->start_time;
 		ft_forkproc_copy_semaphores(table, philo);
+		if (i % 2 == 0)
+			ft_sleep_micro(10);
 		pid = fork();
 		if (pid != 0)
 		{
@@ -73,9 +76,7 @@ int	ft_forkproc_create_proc(t_table *table)
 			philo->process = pid;
 		}
 		else
-		{
 			ft_forkproc_child(philo);
-		}
 		i++;
 	}
 	return (0);

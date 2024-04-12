@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 00:21:52 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 12:57:13 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:06:27 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ft_philosopher.h"
 #include "ft_table.h"
 #include "ft_timestamp.h"
+#include "ft_log.h"
 
 void	*ft_threads_check_philo_dead(void *args)
 {
@@ -27,6 +28,8 @@ void	*ft_threads_check_philo_dead(void *args)
 		now = ft_timestamp_get();
 		if (now - philo->meals.timestamp >= philo->rules.time_to_die)
 		{
+			ft_log(philo, "died", now - philo->start_time);
+			sem_wait(philo->sem_console);
 			sem_post(philo->sem_dead);
 			exit(EXIT_SUCCESS);
 		}

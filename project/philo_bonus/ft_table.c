@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:53:56 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 12:58:20 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:29:01 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	ft_table_destroy(t_table *table)
 	{
 		ft_philosophers_destroy(&table->philosophers_set);
 	}
-	sem_close(table->sem_console);
-	sem_close(table->sem_meal);
-	sem_close(table->sem_forks);
-	sem_close(table->sem_dead);
-	sem_close(table->sem_end);
+	ft_semaphore_destroy(SEMAPHOR_CONSOLE, table->sem_console);
+	ft_semaphore_destroy(SEMAPHOR_DEAD, table->sem_dead);
+	ft_semaphore_destroy(SEMAPHOR_FORKS, table->sem_forks);
+	ft_semaphore_destroy(SEMAPHOR_MEALS, table->sem_meal);
+	ft_semaphore_destroy(SEMAPHOR_END, table->sem_end);
 }
 
 t_table	ft_table_init(t_args args)

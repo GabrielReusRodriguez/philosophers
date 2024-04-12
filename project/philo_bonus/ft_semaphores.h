@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_semaphores.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 23:12:05 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/10 23:42:06 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/12 14:28:05 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 # define SEMAPHOR_CONSOLE   "semaphor_console"
 
 sem_t	*ft_semaphore_create(char *name, int value);
+void    ft_semaphore_destroy(char *sem_name, sem_t *sem_value);
 
 #endif

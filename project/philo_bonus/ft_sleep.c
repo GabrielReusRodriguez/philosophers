@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 23:24:21 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/12 13:46:19 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:17:37 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,9 @@
 int	ft_sleep(unsigned long millisecs)
 {
 	return (usleep(millisecs * 1000));
+}
+
+int    ft_sleep_micro(unsigned long microsecs)
+{
+	return (usleep(microsecs));
 }

@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 13:42:32 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:28:11 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "ft_philosopher.h"
 #include "ft_timestamp.h"
 #include "ft_sleep.h"
+#include "ft_semaphores.h"
 
 t_philosopher	ft_philosopher_new(size_t num_philo)
 {
@@ -70,12 +71,13 @@ t_philosopher_set	ft_philosophers_init(t_args args, \
 	return (philo);
 }
 
+
 void	ft_philosopher_destroy(t_philosopher *philosopher)
 {
-	sem_close(philosopher->sem_console);
-	sem_close(philosopher->sem_dead);
-	sem_close(philosopher->sem_forks);
-	sem_close(philosopher->sem_meal);
+	ft_semaphore_destroy(SEMAPHOR_CONSOLE, philosopher->sem_console);
+	ft_semaphore_destroy(SEMAPHOR_DEAD, philosopher->sem_dead);
+	ft_semaphore_destroy(SEMAPHOR_FORKS, philosopher->sem_forks);
+	ft_semaphore_destroy(SEMAPHOR_MEALS, philosopher->sem_meal);
 }
 
 void	ft_philosophers_destroy(t_philosopher_set *philo)
