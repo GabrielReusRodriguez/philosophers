@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/12 12:55:36 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:42:17 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,21 @@ void	ft_main_run_simulation(t_table *table)
 	pthread_t	deads_thread;
 	pthread_t	meals_thread;
 
-	ft_threads_createthread(&deads_thread, ft_main_check_deads, table);
-	ft_threads_createthread(&meals_thread, ft_main_check_meals, table);
-	sem_wait(table->sem_end);
+	if (ft_threads_createthread(&deads_thread, ft_main_check_deads, table) < 0)
+	{
+		ft_forkproc_killall(table->philosophers_set);
+		exit(EXIT_FAILURE);
+	}
+	if (ft_threads_createthread(&meals_thread, ft_main_check_meals, table) < 0)
+	{
+		ft_forkproc_killall(table->philosophers_set);
+		exit(EXIT_FAILURE);
+	}
+	if (sem_wait(table->sem_end) < 0)
+	{
+		ft_forkproc_killall(table->philosophers_set);
+		exit(EXIT_FAILURE);
+	}
 	ft_forkproc_killall(table->philosophers_set);
 }
 

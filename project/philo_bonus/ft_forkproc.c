@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:21:09 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 13:22:40 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:47:21 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ int	ft_forkproc_create_proc(t_table *table)
 	return (0);
 }
 
+/*
+	Here we wait for all childs to stop.
+*/
 int	ft_forkproc_wait(t_philosopher_set philosophers)
 {
 	size_t	i;
@@ -96,6 +99,9 @@ int	ft_forkproc_wait(t_philosopher_set philosophers)
 	return (0);
 }
 
+/*
+	Here we kill all child process.
+*/
 int	ft_forkproc_killall(t_philosopher_set philosophers)
 {
 	size_t	i;
@@ -103,8 +109,11 @@ int	ft_forkproc_killall(t_philosopher_set philosophers)
 	i = 0;
 	while (i < philosophers.total)
 	{
-		if (kill(philosophers.philosophers[i].process, SIGKILL) < 0)
-			return (-1);
+		if (philosophers.philosophers[i].process != -1)
+		{
+			if (kill(philosophers.philosophers[i].process, SIGKILL) < 0)
+				return (-1);
+		}
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:14:51 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/02 00:56:13 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:29:02 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,36 +86,3 @@ t_bool	ft_args_validate_value(t_args	args)
 	}
 	return (ft_args_validate_optional_value(args));
 }
-
-/*
-t_bool	ft_args_validate_value(t_args	args)
-{
-	if (args.num_philo <= 0)
-	{
-		ft_utils_print(STDERR_FILENO, "Invalid philosophers number\n");
-		return (FALSE);
-	}
-	if (args.time_to_die <= 0)
-	{
-		ft_utils_print(STDERR_FILENO, "Invalid time to die\n");
-		return (FALSE);
-	}
-	if (args.time_to_eat <= 0)
-	{
-		ft_utils_print(STDERR_FILENO, "Invalid time to eat\n");
-		return (FALSE);
-	}
-	if (args.time_to_sleep <= 0)
-	{
-		ft_utils_print(STDERR_FILENO, "Invalid time to sleep\n");
-		return (FALSE);
-	}
-	if (args.num_must_eat == 0)
-	{
-		ft_utils_print(STDERR_FILENO, \
-			"Invalid number of times each philosopher must eat\n");
-		return (FALSE);
-	}
-	return (TRUE);
-}
-*/
