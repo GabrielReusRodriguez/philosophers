@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 14:28:11 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:30:47 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_philosopher_set	ft_philosophers_init(t_args args, \
 	}
 	return (philo);
 }
-
 
 void	ft_philosopher_destroy(t_philosopher *philosopher)
 {

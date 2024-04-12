@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 23:42:20 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 14:30:23 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:31:06 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ sem_t	*ft_semaphore_create(char *name, int value)
 		
 	To be sure we have deleted the semaphore, the best is first unlink 
 	(de-register de semaphore) and then close.*/
-void    ft_semaphore_destroy(char *sem_name, sem_t *sem_value)
+void	ft_semaphore_destroy(char *sem_name, sem_t *sem_value)
 {
 	sem_unlink(sem_name);
 	sem_close(sem_value);
