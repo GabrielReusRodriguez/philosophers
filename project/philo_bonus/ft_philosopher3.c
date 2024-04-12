@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 20:58:06 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/11 00:08:56 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/11 22:20:26 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	ft_philosopher_eat(t_philosopher *philo)
 	if (ft_philosopher_pickup_forks(philo) == 1)
 		return ;
 	timestamp = ft_timestamp_get();
+    philo->meals.timestamp = timestamp;
+    philo->meals.num_meals++;
 //	ft_mutex_meal_update(&philo->meals, timestamp);
 	ft_log(philo, "is eating", timestamp - philo->start_time);
 	//ft_thread_printf(philo, "is eating", timestamp - philo->start_time);

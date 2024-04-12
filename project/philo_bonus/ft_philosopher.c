@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/11 21:34:00 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/11 22:24:00 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_philosopher_set	ft_philosophers_init(t_args args, \
 	if (philo.philosophers == NULL)
 		return (philo);
 	philo.total = args.num_philo;
+    philo.philosophers->meals.num_meals = 0;
 	i = 0;
 	while (i < philo.total)
 	{
