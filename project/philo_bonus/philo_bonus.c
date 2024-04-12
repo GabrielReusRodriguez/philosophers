@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/11 21:19:29 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/12 11:52:58 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ void    *ft_main_check_deads(void *arg)
 
 	table = (t_table *)arg;
 	sem_wait(table->sem_dead);
-	ft_table_destroy(table);
-	exit(EXIT_SUCCESS);
+	sem_post(table->sem_end);
+	//ft_forkproc_killall(table->philosophers_set);
+	//ft_table_destroy(table);
+	//exit(EXIT_SUCCESS);
+	return (NULL);
 }
 
 void    *ft_main_check_meals(void *arg)
@@ -89,9 +92,11 @@ void    *ft_main_check_meals(void *arg)
 		sem_wait(table->sem_meal);
 		i++;
 	}
-	ft_table_destroy(table);
-	exit(EXIT_SUCCESS);
-
+	sem_post(table->sem_end);
+	//ft_forkproc_killall(table->philosophers_set);
+	//ft_table_destroy(table);
+	//exit(EXIT_SUCCESS);
+	return (NULL);
 }
 
 void	ft_main_run_simulation(t_table *table)
@@ -132,11 +137,8 @@ int	main(int argc, char **argv)
 	table = ft_table_init(args);
 	if (ft_main_check_init(&table) == -1)
 		return (EXIT_FAILURE);
-	printf("PRe-create fork\n");
 	ft_forkproc_create_proc(&table);
-	printf("PRe-run\n");
 	ft_main_run_simulation(&table);
-	printf("PRe-wait\n");
 	ft_forkproc_wait(table.philosophers_set);
 	ft_table_destroy(&table);
 	return (0);

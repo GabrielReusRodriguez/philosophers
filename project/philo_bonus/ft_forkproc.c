@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_forkproc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:21:09 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/11 21:38:36 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/12 11:49:30 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 #include "ft_forkproc.h"
 #include "ft_philosopher.h"
 #include "ft_threads.h"
-
-#include <stdio.h>
-
 
 static void	ft_forkproc_copy_semaphores(t_table *table, t_philosopher *philo)
 {
