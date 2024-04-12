@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosopher.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:03:25 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/11 21:32:36 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:51:13 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ typedef struct s_philosopher
 	t_bool			r_fork;
 	t_rules			rules;
 	t_timestamp		start_time;
-    t_meals         meals;
-//    sem_t           *sem_end;
-    sem_t           *sem_dead;
-    sem_t           *sem_meal;
-    sem_t           *sem_console;
-    sem_t           *sem_forks;
-    pid_t           process;
+	t_meals			meals;
+	sem_t			*sem_dead;
+	sem_t			*sem_meal;
+	sem_t			*sem_console;
+	sem_t			*sem_forks;
+	pid_t			process;
 }	t_philosopher;
 
 typedef struct s_philosopher_set

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_log.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:12:11 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/10 23:59:30 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:52:47 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "ft_philosopher.h"
 
-void    ft_log(t_philosopher *philo, const char *msg , t_timestamp time);
+void	ft_log(t_philosopher *philo, const char *msg, t_timestamp time);
 
 #endif

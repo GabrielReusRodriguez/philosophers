@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/12 12:13:11 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:55:36 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,20 @@
 #include "ft_threads.h"
 #include "ft_forkproc.h"
 
-void    *ft_main_check_deads(void *arg)
+void	*ft_main_check_deads(void *arg)
 {
-	t_table *table;
+	t_table	*table;
 
 	table = (t_table *)arg;
 	sem_wait(table->sem_dead);
 	sem_post(table->sem_end);
-	//ft_forkproc_killall(table->philosophers_set);
-	//ft_table_destroy(table);
-	//exit(EXIT_SUCCESS);
 	return (NULL);
 }
 
-void    *ft_main_check_meals(void *arg)
+void	*ft_main_check_meals(void *arg)
 {
-	t_table *table;
-	size_t  i;
+	t_table	*table;
+	size_t	i;
 
 	table = (t_table *)arg;
 	i = 0;
@@ -46,26 +43,16 @@ void    *ft_main_check_meals(void *arg)
 		i++;
 	}
 	sem_post(table->sem_end);
-	//ft_forkproc_killall(table->philosophers_set);
-	//ft_table_destroy(table);
-	//exit(EXIT_SUCCESS);
 	return (NULL);
 }
 
 void	ft_main_run_simulation(t_table *table)
 {
-	
-	pthread_t   deads_thread;
-	pthread_t   meals_thread;
+	pthread_t	deads_thread;
+	pthread_t	meals_thread;
 
 	ft_threads_createthread(&deads_thread, ft_main_check_deads, table);
 	ft_threads_createthread(&meals_thread, ft_main_check_meals, table);
-	/*
-	pthread_create(&deads_thread, NULL, ft_main_check_deads, table);
-	pthread_detach(deads_thread);
-	pthread_create(&meals_thread, NULL, ft_main_check_meals, table);
-	pthread_detach(meals_thread);
-	*/
 	sem_wait(table->sem_end);
 	ft_forkproc_killall(table->philosophers_set);
 }

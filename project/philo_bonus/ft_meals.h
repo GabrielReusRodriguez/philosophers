@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_meals.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 19:25:15 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/07 23:29:17 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:52:02 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ typedef struct s_meals
 	t_timestamp		timestamp;
 	int				num_meals;
 }	t_meals;
-
 
 #endif

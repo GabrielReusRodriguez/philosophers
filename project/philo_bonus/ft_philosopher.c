@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosopher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/11 22:24:00 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/12 13:12:32 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_philosopher	ft_philosopher_new(size_t num_philo)
 	philosopher.status = PHILO_STATUS_INIT;
 	philosopher.l_fork = FALSE;
 	philosopher.r_fork = FALSE;
-    philosopher.meals.num_meals = 0;
+	philosopher.meals.num_meals = 0;
 	philosopher.meals.timestamp = 0l;
 	return (philosopher);
 }
@@ -58,7 +58,7 @@ t_philosopher_set	ft_philosophers_init(t_args args, \
 	if (philo.philosophers == NULL)
 		return (philo);
 	philo.total = args.num_philo;
-    philo.philosophers->meals.num_meals = 0;
+	philo.philosophers->meals.num_meals = 0;
 	i = 0;
 	while (i < philo.total)
 	{
@@ -76,7 +76,6 @@ void	ft_philosopher_destroy(t_philosopher *philosopher)
 	sem_close(philosopher->sem_forks);
 	sem_close(philosopher->sem_meal);
 }
-
 
 void	ft_philosophers_destroy(t_philosopher_set *philo)
 {

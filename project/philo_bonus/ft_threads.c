@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 00:21:52 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 12:11:08 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:57:13 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "ft_table.h"
 #include "ft_timestamp.h"
 
-void    *ft_threads_check_philo_dead(void *args)
+void	*ft_threads_check_philo_dead(void *args)
 {
-	t_timestamp     now;
-	t_philosopher   *philo;
+	t_timestamp		now;
+	t_philosopher	*philo;
 
-	philo  = (t_philosopher *)args;
+	philo = (t_philosopher *)args;
 	philo->meals.timestamp = philo->start_time;
-	while(TRUE)
+	while (TRUE)
 	{
 		now = ft_timestamp_get();
 		if (now - philo->meals.timestamp >= philo->rules.time_to_die)
@@ -34,26 +34,26 @@ void    *ft_threads_check_philo_dead(void *args)
 	return (NULL);
 }
 
-void    *ft_threads_check_philo_meal(void * args)
+void	*ft_threads_check_philo_meal(void *args)
 {
-	t_philosopher *philo;
+	t_philosopher	*philo;
 
 	philo = (t_philosopher *)args;
-	while(TRUE)
+	while (TRUE)
 	{
 		if (philo->meals.num_meals >= philo->rules.number_eats)
 		{
 			sem_post(philo->sem_meal);
-			break;
+			break ;
 		}
 	}
 	return (NULL);
 }
 
-void *	ft_threads_check_meals(void * args)
+void	*ft_threads_check_meals(void *args)
 {
-	size_t  i;
-	t_table *table;
+	size_t	i;
+	t_table	*table;
 
 	table = (t_table *)args;
 	i = 0;
@@ -67,7 +67,7 @@ void *	ft_threads_check_meals(void * args)
 
 void	*ft_threads_check_deads(void *args)
 {
-	t_table *table;
+	t_table	*table;
 
 	table = (t_table *)args;
 	sem_wait(table->sem_end);

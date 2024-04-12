@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosopher2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/11 21:46:44 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/04/12 13:12:03 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,25 @@
 
 static void	ft_philosopher_do_state(t_philosopher *philo)
 {
-    while(TRUE)
-    {
-	    if (philo->status == PHILO_STATUS_INIT || \
-		    	philo->status == PHILO_STATUS_THINK)
-	    {
-		    ft_philosopher_eat(philo);
-		    continue ;
-	    }
-	    if (philo->status == PHILO_STATUS_EAT)
-	    {
-		    ft_philosopher_sleep(philo);
-		    continue ;
-	    }
-	    if (philo->status == PHILO_STATUS_SLEEP)
-	    {
-		    ft_philosopher_think(philo);
-		    continue ;
-	    }
-    }
+	while (TRUE)
+	{
+		if (philo->status == PHILO_STATUS_INIT || \
+				philo->status == PHILO_STATUS_THINK)
+		{
+			ft_philosopher_eat(philo);
+			continue ;
+		}
+		if (philo->status == PHILO_STATUS_EAT)
+		{
+			ft_philosopher_sleep(philo);
+			continue ;
+		}
+		if (philo->status == PHILO_STATUS_SLEEP)
+		{
+			ft_philosopher_think(philo);
+			continue ;
+		}
+	}
 }
 
 void	*ft_philosopher_life(void *arg)
@@ -57,7 +57,6 @@ void	ft_philosopher_sleep(t_philosopher *philo)
 	philo->status = PHILO_STATUS_SLEEP;
 	timestamp = ft_timestamp_get();
 	ft_log(philo, "is sleeping", timestamp - philo->start_time);
-	//ft_thread_printf(philo, "is sleeping", timestamp - philo->start_time);
 	ft_sleep(philo->rules.time_to_sleep);
 }
 
@@ -68,5 +67,4 @@ void	ft_philosopher_think(t_philosopher *philo)
 	philo->status = PHILO_STATUS_THINK;
 	timestamp = ft_timestamp_get();
 	ft_log(philo, "is thinking", timestamp - philo->start_time);
-	//ft_thread_printf(philo, "is thinking", timestamp - philo->start_time);
 }
