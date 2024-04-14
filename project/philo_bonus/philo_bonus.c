@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/12 14:02:18 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/14 23:59:54 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ void	*ft_main_check_meals(void *arg)
 	i = 0;
 	while (i < table->philosophers_set.total)
 	{
-		sem_wait(table->sem_meal);
+		if (sem_wait(table->sem_meal) < 0)
+		{
+			printf("ERROR at semaphor waitting\n");
+			break ;
+		}
 		i++;
 	}
 	sem_post(table->sem_end);

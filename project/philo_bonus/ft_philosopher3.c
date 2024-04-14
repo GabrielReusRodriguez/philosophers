@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosopher3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 20:58:06 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 13:10:01 by greus-ro         ###   ########.fr       */
+/*   Created: 2024/04/14 16:07:53 by greus-ro          #+#    #+#             */
+/*   Updated: 2024/04/14 23:59:03 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,24 @@
 #include "ft_philosopher.h"
 #include "ft_sleep.h"
 #include "ft_log.h"
+#include "ft_semaphores.h"
 
 /* Philosopher takes fork.*/
 static int	ft_philosopher_pickup_forks(t_philosopher *philo)
 {
 	t_timestamp	timestamp;
 
-	sem_wait(philo->sem_forks);
+	ft_semaphore_wait(philo->sem_forks, philo->sem_end);
 	philo->l_fork = TRUE;
 	timestamp = ft_timestamp_get();
 	ft_log(philo, "has taken a fork", timestamp - philo->start_time);
 	if (philo->total == 1)
 	{
 		ft_sleep(philo->rules.time_to_die);
-		sem_post(philo->sem_forks);
+		ft_semaphore_post(philo->sem_forks, philo->sem_end);
 		return (1);
 	}
-	sem_wait(philo->sem_forks);
+	ft_semaphore_wait(philo->sem_forks, philo->sem_end);
 	philo->r_fork = TRUE;
 	timestamp = ft_timestamp_get();
 	ft_log(philo, "has taken a fork", timestamp - philo->start_time);
@@ -46,12 +47,14 @@ void	ft_philosopher_eat(t_philosopher *philo)
 	if (ft_philosopher_pickup_forks(philo) == 1)
 		return ;
 	timestamp = ft_timestamp_get();
+	ft_semaphore_wait(philo->sem_check_meal, philo->sem_end);
 	philo->meals.timestamp = timestamp;
 	philo->meals.num_meals++;
+	ft_semaphore_post(philo->sem_check_meal, philo->sem_end);
 	ft_log(philo, "is eating", timestamp - philo->start_time);
 	ft_sleep(philo->rules.time_to_eat);
 	philo->l_fork = FALSE;
-	sem_post(philo->sem_forks);
+	ft_semaphore_post(philo->sem_forks, philo->sem_end);
 	philo->r_fork = FALSE;
-	sem_post(philo->sem_forks);
+	ft_semaphore_post(philo->sem_forks, philo->sem_end);
 }

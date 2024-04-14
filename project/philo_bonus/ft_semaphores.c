@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_semaphores.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 23:42:20 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 14:31:06 by greus-ro         ###   ########.fr       */
+/*   Created: 2024/04/14 16:08:13 by greus-ro          #+#    #+#             */
+/*   Updated: 2024/04/15 00:00:58 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,24 @@ void	ft_semaphore_destroy(char *sem_name, sem_t *sem_value)
 {
 	sem_unlink(sem_name);
 	sem_close(sem_value);
+}
+
+void	ft_semaphore_post(sem_t *sem, sem_t *end)
+{
+	if (sem_post(sem) < 0)
+	{
+		sem_post(end);
+		printf("ERROR posting semaphore \n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	ft_semaphore_wait(sem_t *sem, sem_t *end)
+{
+	if (sem_wait(sem) < 0)
+	{
+		sem_post(end);
+		printf("ERROR waitting semaphore \n");
+		exit(EXIT_FAILURE);
+	}
 }

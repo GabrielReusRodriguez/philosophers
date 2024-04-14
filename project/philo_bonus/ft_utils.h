@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:18:13 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/02 18:13:44 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/15 00:00:11 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int		ft_utils_atoi(const char *number);
 int		ft_utils_ctoi(char number);
 t_bool	ft_utils_isdigit(char character);
 t_bool	ft_utils_contains_num(const char *str);
-int		ft_strlen(const char *str);
+int		ft_utils_strlen(const char *str);
 void	ft_utils_print(int fd, const char *str);
+char	*ft_utils_strjoin(char *str1, char*str2);
+char	*ft_utils_itoa(int n);
 
 #endif

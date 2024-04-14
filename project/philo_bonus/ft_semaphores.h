@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_semaphores.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 23:12:05 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 14:31:46 by greus-ro         ###   ########.fr       */
+/*   Created: 2024/04/14 16:08:19 by greus-ro          #+#    #+#             */
+/*   Updated: 2024/04/14 23:51:27 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@
 
 sem_t	*ft_semaphore_create(char *name, int value);
 void	ft_semaphore_destroy(char *sem_name, sem_t *sem_value);
+void	ft_semaphore_post(sem_t *sem, sem_t *end);
+void	ft_semaphore_wait(sem_t *sem, sem_t *end);
 
 #endif

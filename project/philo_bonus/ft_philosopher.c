@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosopher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 14:30:47 by greus-ro         ###   ########.fr       */
+/*   Created: 2024/04/14 16:07:36 by greus-ro          #+#    #+#             */
+/*   Updated: 2024/04/14 23:56:25 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ t_philosopher	ft_philosopher_new(size_t num_philo)
 	philosopher.r_fork = FALSE;
 	philosopher.meals.num_meals = 0;
 	philosopher.meals.timestamp = 0l;
+	philosopher.sem_check_meal = NULL;
+	philosopher.sem_console = NULL;
+	philosopher.sem_dead = NULL;
+	philosopher.sem_end = NULL;
+	philosopher.sem_forks = NULL;
+	philosopher.sem_meal_condition = NULL;
+	philosopher.name_sem_check_meal = NULL;
 	return (philosopher);
 }
 
@@ -73,10 +80,9 @@ t_philosopher_set	ft_philosophers_init(t_args args, \
 
 void	ft_philosopher_destroy(t_philosopher *philosopher)
 {
-	ft_semaphore_destroy(SEMAPHOR_CONSOLE, philosopher->sem_console);
-	ft_semaphore_destroy(SEMAPHOR_DEAD, philosopher->sem_dead);
-	ft_semaphore_destroy(SEMAPHOR_FORKS, philosopher->sem_forks);
-	ft_semaphore_destroy(SEMAPHOR_MEALS, philosopher->sem_meal);
+	ft_semaphore_destroy(philosopher->name_sem_check_meal, \
+			philosopher->sem_check_meal);
+	free (philosopher->name_sem_check_meal);
 }
 
 void	ft_philosophers_destroy(t_philosopher_set *philo)

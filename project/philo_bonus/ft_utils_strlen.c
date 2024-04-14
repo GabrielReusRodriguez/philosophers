@@ -6,11 +6,11 @@
 /*   By: greus-ro <greus-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:39:23 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/04/02 18:33:55 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/04/14 19:27:50 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *str)
+int	ft_utils_strlen(const char *str)
 {
 	int	size;
 

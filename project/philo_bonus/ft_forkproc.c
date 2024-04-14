@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_forkproc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 20:21:09 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 14:18:31 by greus-ro         ###   ########.fr       */
+/*   Created: 2024/04/14 16:07:09 by greus-ro          #+#    #+#             */
+/*   Updated: 2024/04/14 23:55:55 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,27 @@
 #include "ft_threads.h"
 #include "ft_sleep.h"
 
+static void	ft_forkproc_new_philo_sem(t_philosopher *philo)
+{
+	char	*num_philo;
+
+	num_philo = ft_utils_itoa(philo->number);
+	philo->name_sem_check_meal = ft_utils_strjoin("sem_check_meals", \
+									num_philo);
+	free (num_philo);
+	if (philo->name_sem_check_meal == NULL)
+		exit(EXIT_FAILURE);
+	philo->sem_check_meal = ft_semaphore_create(philo->name_sem_check_meal, 1);
+}
+
 static void	ft_forkproc_copy_semaphores(t_table *table, t_philosopher *philo)
 {
 	philo->sem_console = table->sem_console;
 	philo->sem_forks = table->sem_forks;
-	philo->sem_meal = table->sem_meal;
+	philo->sem_meal_condition = table->sem_meal;
 	philo->sem_dead = table->sem_dead;
+	philo->sem_end = table->sem_end;
+	ft_forkproc_new_philo_sem(philo);
 }
 
 static void	ft_forkproc_child(t_philosopher *philo)
@@ -77,44 +92,6 @@ int	ft_forkproc_create_proc(t_table *table)
 		}
 		else
 			ft_forkproc_child(philo);
-		i++;
-	}
-	return (0);
-}
-
-/*
-	Here we wait for all childs to stop.
-*/
-int	ft_forkproc_wait(t_philosopher_set philosophers)
-{
-	size_t	i;
-	int		status;
-
-	i = 0;
-	while (i < philosophers.total)
-	{
-		if (waitpid(philosophers.philosophers[i].process, &status, 0) < 0)
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
-/*
-	Here we kill all child process.
-*/
-int	ft_forkproc_killall(t_philosopher_set philosophers)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < philosophers.total)
-	{
-		if (philosophers.philosophers[i].process != -1)
-		{
-			if (kill(philosophers.philosophers[i].process, SIGKILL) < 0)
-				return (-1);
-		}
 		i++;
 	}
 	return (0);

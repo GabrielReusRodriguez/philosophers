@@ -2,6 +2,7 @@ NAME=philo
 #CDEBUG = -g3 -fsanitize=address
 #CDEBUG = -g3
 #PTHREAD_FLAG = -lpthread
+CDEBUG =
 CFLAGS=-Wall -Wextra -Werror -MMD -MP ${CDEBUG} ${PTHREAD_FLAG}
 
 SRC_DIR=.
@@ -10,6 +11,7 @@ INC_DIR=./inc
 
 SRC_FILES=	ft_args.c				\
 			ft_forkproc.c			\
+			ft_forkproc2.c			\
 			ft_log.c				\
 			ft_philosopher.c		\
 			ft_philosopher2.c		\
@@ -25,7 +27,9 @@ SRC_FILES=	ft_args.c				\
 			ft_utils_ctoi.c			\
 			ft_utils_contains_num.c	\
 			ft_utils_isdigit.c		\
+			ft_utils_itoa.c			\
 			ft_utils_print.c		\
+			ft_utils_strjoin.c		\
 			ft_utils_strlen.c		\
 			philo_bonus.c
 
@@ -34,14 +38,14 @@ SRC_FILES=	ft_args.c				\
 OBJ_FILES=$(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
 DEP_FILES=$(SRC_FILES:%.c=$(OBJ_DIR)/%.d)
 
-#OBJ_BONUS_FILES=$(BONUS_SRC_FILES:%.c=$(OBJ_DIR)/%.o)
-#DEP_BONUS_FILES=$(BONUS_SRC_FILES:%.c=$(OBJ_DIR)/%.d)
+OBJ_BONUS_FILES=$(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
+DEP_BONUS_FILES=$(SRC_FILES:%.c=$(OBJ_DIR)/%.d)
 
 all: $(NAME)
 
-#bonus: $(OBJ_DIR) ${LIBFT_LIB} ${OBJ_BONUS_FILES}
-#	cc ${OBJ_BONUS_FILES} -o ${NAME} ${LIBFT_LIB}
-#	@touch bonus
+bonus: $(OBJ_DIR) ${OBJ_BONUS_FILES}
+	cc ${OBJ_FILES} -o ${NAME}
+	@touch bonus
 
 $(NAME): $(OBJ_DIR) $(OBJ_FILES) 
 	cc ${OBJ_FILES} -o ${NAME}
@@ -49,15 +53,13 @@ $(NAME): $(OBJ_DIR) $(OBJ_FILES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
 	cc $(CFLAGS) -I${INC_DIR} -c $< -o $@
 
-#$(OBJ_DIR)/%.o: $(BONUS_SRC_DIR)/%.c Makefile
-#	cc $(CFLAGS) -I${BONUS_INC_DIR} -I${LIBFT_INC_DIR} -c $< -o $@
-
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 clean:
 	rm -f $(OBJ_DIR)/*.o
 	rm -f $(OBJ_DIR)/*.d
+	rm -f ./bonus
 
 fclean: clean
 	rm -f $(NAME)

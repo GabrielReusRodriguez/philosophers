@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosopher2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 23:25:18 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 13:12:03 by greus-ro         ###   ########.fr       */
+/*   Created: 2024/04/14 16:07:46 by greus-ro          #+#    #+#             */
+/*   Updated: 2024/04/14 22:31:47 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "ft_args.h"
 #include "ft_philosopher.h"

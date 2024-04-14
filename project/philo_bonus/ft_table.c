@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_table.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 23:53:56 by gabriel           #+#    #+#             */
-/*   Updated: 2024/04/12 14:29:01 by greus-ro         ###   ########.fr       */
+/*   Created: 2024/04/14 16:08:30 by greus-ro          #+#    #+#             */
+/*   Updated: 2024/04/14 23:46:06 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include <semaphore.h>
 #include <stdlib.h>
 #include "ft_table.h"
 #include "ft_args.h"
