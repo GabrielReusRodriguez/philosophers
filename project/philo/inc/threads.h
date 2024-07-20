@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:09:51 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 18:54:19 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/20 23:43:54 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 
 bool	threads_create(t_simulation *simulation);
 bool	threads_join(t_simulation *simulation);
+bool	threads_sleep(t_nanosecs usecs);
 
 #endif

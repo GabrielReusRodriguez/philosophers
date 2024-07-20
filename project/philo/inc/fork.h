@@ -6,12 +6,11 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:01:37 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/19 22:22:04 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/20 23:48:43 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FORK_H
-
 # define FORK_H
 
 # include <stdbool.h>

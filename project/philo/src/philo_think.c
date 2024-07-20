@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   philo_think.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/19 23:28:36 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 19:54:07 by gabriel          ###   ########.fr       */
+/*   Created: 2024/07/21 00:33:26 by gabriel           #+#    #+#             */
+/*   Updated: 2024/07/21 00:38:30 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <stdbool.h>
 
+#include "simulation.h"
 #include "philosopher.h"
+#include "utils.h"
 #include "timestamp.h"
 #include "printer.h"
 
-void	*philo_life(void * arg)
+bool	philo_think(t_philosopher *philo)
 {
-	t_philosopher	*philo;
-	t_milisecs		timestamp;
-
-	philo = (t_philosopher *)arg;
+	t_milisecs	timestamp;
+	
 	if (!get_timestamp(&timestamp))
 	{
-		printf("ERROR AT get_timestamp.\n");
-		return	(NULL);
+		ft_putendl(STDERR_FILENO, "ERROR AT get_timestamp.");
+		simulation_force_stop(philo->mtx_run_sim);
+		return	(false);
 	}
-	printf("JAJAJAJA\n");
-	printer_write(philo, timestamp - philo->time_of_start, "Hola mundo!\n");
-	return (arg);
+	printer_write(philo, timestamp - philo->time_of_start, "is thinking");
+	philo->status = THINKING;
+	return (true);	
 }

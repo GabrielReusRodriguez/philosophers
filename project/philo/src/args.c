@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:19:12 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/18 22:58:19 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/21 00:07:39 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	args_validate_uint(const char *arg)
 	i = 0;
 	while (arg[i] != '\0')
 	{
-		if (!(arg[i] > '0' && arg[i] < '9'))
+		if (!(arg[i] >= '0' && arg[i] <= '9'))
 			return (false);
 		i++;
 	}

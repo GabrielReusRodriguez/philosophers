@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:39:35 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 19:46:02 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/20 23:52:09 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static bool	philo_init(t_simulation *simulation, size_t num_philo)
 	philo->r_fork = &simulation->forks[num_philo];
 	philo->mtx_run_sim = &simulation->mtx_run;
 	philo->mtx_num_meals.value = 0;
+	philo->status = INIT;
 	if (total_philos == 1)
 		return (true);
 	if (num_philo == 0)
