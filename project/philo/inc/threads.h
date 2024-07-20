@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   timestamp.h                                        :+:      :+:    :+:   */
+/*   threads.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 23:21:54 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 18:35:27 by gabriel          ###   ########.fr       */
+/*   Created: 2024/07/20 18:09:51 by gabriel           #+#    #+#             */
+/*   Updated: 2024/07/20 18:54:19 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TIMESTAMP_H
-# define TIMESTAMP_H
+#ifndef THREADS_H
+# define THREADS_H
 
-# include "datatypes.h"
+# include <stdbool.h>
+# include <stddef.h>
 
-bool	get_timestamp(t_milisecs *milisecs);
+# include "simulation.h"
+# include "mutex_data.h"
+
+bool	threads_create(t_simulation *simulation);
+bool	threads_join(t_simulation *simulation);
 
 #endif

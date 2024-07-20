@@ -9,13 +9,17 @@ SRC_DIR = ./src
 OBJ_DIR = ./obj
 INC_DIR = ./inc
 
-SRC_FILES =		args		\
-				fork_utils	\
-				main		\
-				philo_utils	\
-				rules		\
-				simulation	\
-				timestamp	\
+SRC_FILES =		args				\
+				fork_utils			\
+				main				\
+				philo_utils			\
+				philo				\
+				printer				\
+				rules				\
+				simulation_utils	\
+				simulation			\
+				threads				\
+				timestamp			\
 				utils
 
 ifdef SANITIZE

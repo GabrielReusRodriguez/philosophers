@@ -6,17 +6,20 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/07/19 22:50:20 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/20 19:50:31 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 
 #include "rules.h"
 #include "simulation.h"
+#include "philosopher.h"
+#include "utils.h"
+#include "threads.h"
 
+#include <stdio.h>
 
 static void	rules_debug(t_rules rules)
 {
@@ -29,6 +32,7 @@ static void	rules_debug(t_rules rules)
 	printf("END RULES******************\n");
 
 }
+
 /*
 	main does:
 		1. Validate format of args.
@@ -44,12 +48,16 @@ int	main(int argc, char **argv)
 {
 	t_simulation	simulation;
 
+	simulation = simulation_new();
 	if (!rules_import_args(argc, argv, &simulation.rules))
 		return (EXIT_FAILURE);
-	simulation = simulation_new();
-	if (!simulation_init(&simulation))
-		return (simulation_destroy(&simulation), false);
 	rules_debug(simulation.rules);
+	if (!simulation_init(&simulation))
+		return (simulation_destroy(&simulation), EXIT_FAILURE);
+	if (!threads_create(&simulation))
+		return (simulation_destroy(&simulation), EXIT_FAILURE);
+	if (!threads_join(&simulation))
+		return (simulation_destroy(&simulation), EXIT_FAILURE);
 	simulation_destroy(&simulation);
 	return (EXIT_SUCCESS);
 }

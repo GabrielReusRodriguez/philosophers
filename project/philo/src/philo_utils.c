@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:39:35 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/19 23:23:22 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/20 19:46:02 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,23 @@ static bool	philo_init(t_simulation *simulation, size_t num_philo)
 	total_philos = simulation->rules.number_of_philos;
 	philo = simulation->philos + num_philo;
 	philo->num_philo = num_philo + 1;
+	philo->rules = &simulation->rules;
 	philo->r_fork = &simulation->forks[num_philo];
+	philo->mtx_run_sim = &simulation->mtx_run;
+	philo->mtx_num_meals.value = 0;
 	if (total_philos == 1)
 		return (true);
 	if (num_philo == 0)
 		philo->l_fork = &simulation->forks[total_philos - 1];
 	else
 		philo->l_fork = &simulation->forks[num_philo - 1];
-	if (pthread_mutex_init(&philo->mutex_time_2_eat, NULL) < 0)
-	{
-		ft_putendl(STDERR_FILENO, "ERROR: Error at mutex init.");
-		return (false);
-	}
+	if (pthread_mutex_init(&philo->mtx_time_last_eat.mutex, NULL) < 0)
+		return (ft_putendl(STDERR_FILENO, "ERROR: Error at mutex init."), \
+					false);
+	if (pthread_mutex_init(&philo->mtx_time_last_eat.mutex, NULL) < 0)
+		return (ft_putendl(STDERR_FILENO, "ERROR: Error at mutex init."), \
+					false);
+	philo->mutex_printer = &simulation->mutex_print;
 	return (true);
 }
 
@@ -52,7 +57,7 @@ bool	philos_init(t_simulation *simulation)
 								sizeof(t_philosopher));
 	if (simulation->philos == NULL)
 	{
-		ft_putendl(STDERR_FILENO, "ERROR: Error at memory malloc.");
+		ft_putendl(STDERR_FILENO, "ERROR: Error at memory malloc 2.");
 		return (false);
 	}
 	i = 0;
@@ -70,7 +75,12 @@ bool	philos_init(t_simulation *simulation)
 
 static	bool	philo_destroy(t_philosopher *philo)
 {
-	if (pthread_mutex_destroy(&philo->mutex_time_2_eat) < 0)
+	if (pthread_mutex_destroy(&philo->mtx_time_last_eat.mutex) < 0)
+	{
+		ft_putendl(STDERR_FILENO, "ERROR: Error at mutex destroy.");
+		return (false);
+	}
+	if (pthread_mutex_destroy(&philo->mtx_num_meals.mutex) < 0)
 	{
 		ft_putendl(STDERR_FILENO, "ERROR: Error at mutex destroy.");
 		return (false);

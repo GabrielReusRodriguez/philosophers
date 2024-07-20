@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   timestamp.h                                        :+:      :+:    :+:   */
+/*   printer.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 23:21:54 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 18:35:27 by gabriel          ###   ########.fr       */
+/*   Created: 2024/07/19 23:30:08 by gabriel           #+#    #+#             */
+/*   Updated: 2024/07/20 19:06:18 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TIMESTAMP_H
-# define TIMESTAMP_H
+#ifndef PRINTER_H
+# define PRINTER_H
+
+# include <stdbool.h>
+# include <pthread.h>
 
 # include "datatypes.h"
+# include "philosopher.h"
 
-bool	get_timestamp(t_milisecs *milisecs);
-
+bool	printer_write(t_philosopher *philo, t_milisecs time, \
+			const char *msg);
 #endif

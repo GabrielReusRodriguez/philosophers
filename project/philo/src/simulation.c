@@ -5,46 +5,42 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 23:38:05 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/19 22:51:33 by gabriel          ###   ########.fr       */
+/*   Created: 2024/07/19 23:59:54 by gabriel           #+#    #+#             */
+/*   Updated: 2024/07/20 18:59:05 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stdbool.h>
+#include <pthread.h>
 
-#include "utils.h"
 #include "simulation.h"
-#include "fork.h"
-#include "philosopher.h"
+#include "utils.h"
 
-t_simulation	simulation_new(void)
+bool	simulation_is_running(t_mutex_bool *mutex_run, bool *run)
 {
-	t_simulation	simulation;
-	
-	simulation.forks 			= NULL;
-	simulation.philos 			= NULL;
-	simulation.run				= false;
-	simulation.time_of_start	= 0;
-	return (simulation);
-}
-
-void	simulation_destroy(t_simulation *simulation)
-{
-	forks_destroy(simulation, simulation->rules.number_of_philos);
-	philos_destroy(simulation, simulation->rules.number_of_philos);
-	if (pthread_mutex_destroy(&simulation->mutex_print) < 0)
-		ft_putendl(STDERR_FILENO, "ERROR: Error destroying mutex.");
-}
-
-
-bool	simulation_init(t_simulation *simulation)
-{
-	if (pthread_mutex_init(&simulation->mutex_print, NULL) < 0)
-		return (ft_putendl(STDERR_FILENO, "ERROR: Creating mutex of print."), \
-					false);
-	if (!forks_init(simulation))
-		return (false);
-	if (!philos_init(simulation))
-		return (false);
+	if (pthread_mutex_lock(&mutex_run->mutex) < 0)
+		return (ft_putendl(STDERR_FILENO, \
+					"ERROR: Error at locking end mutex."), false);
+	*run = mutex_run->value;
+	if (pthread_mutex_unlock(&mutex_run->mutex) < 0)
+		return (ft_putendl(STDERR_FILENO, \
+					"ERROR: Error at unlocking end mutex."), false);
 	return (true);
+}
+
+bool	simulation_stop(t_mutex_bool *mutex_run)
+{
+	if (pthread_mutex_lock(&mutex_run->mutex) < 0)
+		return (ft_putendl(STDERR_FILENO, \
+					"ERROR: Error at locking end mutex."), false);
+	mutex_run->value = false;
+	if (pthread_mutex_unlock(&mutex_run->mutex) < 0)
+		return (ft_putendl(STDERR_FILENO, \
+					"ERROR: Error at unlocking end mutex."), false);
+	return (true);
+}
+
+void	simulation_force_stop(t_mutex_bool *mutex_run)
+{
+	mutex_run->value = false;
 }

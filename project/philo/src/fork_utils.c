@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 20:59:46 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/19 22:51:56 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/20 19:30:35 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	forks_init(t_simulation *simulation)
 									* sizeof(t_fork));
 	if (simulation->forks == NULL)
 	{
-		ft_putendl(STDERR_FILENO, "ERROR: Error at malloc.");
+		ft_putendl(STDERR_FILENO, "ERROR: Error at malloc 1.");
 		return (false);
 	}
 	i = 0;
@@ -46,6 +46,7 @@ bool	forks_init(t_simulation *simulation)
 			forks_destroy(simulation, i);
 			return (false);
 		}
+		i++;
 	}
 	return (true);
 }
