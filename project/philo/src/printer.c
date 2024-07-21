@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 23:33:10 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 19:19:35 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/21 23:18:56 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,21 @@ bool	printer_write(t_philosopher *philo, t_milisecs time, \
 			return (ft_putendl(STDERR_FILENO, \
 						"ERROR: Error at unlocking print mutex."), false);
 	}
+	return (true);
+}
+
+bool	printer_unsafe_write(t_philosopher *philo, t_milisecs time, \
+			const char *msg)
+{
+	size_t	num_philo;
+
+	num_philo = philo->num_philo;
+	if (pthread_mutex_lock(philo->mutex_printer) < 0)
+		return (ft_putendl(STDERR_FILENO, \
+					"ERROR: Error at locking print mutex."), false);
+	printf("%lu %lu %s\n", time, num_philo, msg);
+	if (pthread_mutex_unlock(philo->mutex_printer) < 0)
+		return (ft_putendl(STDERR_FILENO, \
+					"ERROR: Error at unlocking print mutex."), false);
 	return (true);
 }

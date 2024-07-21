@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 23:48:04 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/07/20 19:50:31 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/21 23:50:58 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "philosopher.h"
 #include "utils.h"
 #include "threads.h"
+#include "supervisor.h"
 
 #include <stdio.h>
 
@@ -56,6 +57,8 @@ int	main(int argc, char **argv)
 		return (simulation_destroy(&simulation), EXIT_FAILURE);
 	if (!threads_create(&simulation))
 		return (simulation_destroy(&simulation), EXIT_FAILURE);
+	if (!supervisor_checks(&simulation))
+			return (simulation_destroy(&simulation), EXIT_FAILURE);
 	if (!threads_join(&simulation))
 		return (simulation_destroy(&simulation), EXIT_FAILURE);
 	simulation_destroy(&simulation);

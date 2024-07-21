@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 00:34:03 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/21 00:48:29 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/21 23:54:23 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,40 @@
 #include "printer.h"
 #include "threads.h"
 
+static pthread_mutex_t	*philo_determine_fork(t_philosopher *philo, \
+							size_t num_fork)
+{
+	pthread_mutex_t *fork_mutex;
+
+	if (philo->num_philo % 2 == 1)
+	{
+		if (num_fork == 1)
+			fork_mutex = &philo->l_fork->mutex_fork;
+		else
+			fork_mutex = &philo->r_fork->mutex_fork;
+	}
+	else
+	{
+		if (num_fork == 1)
+			fork_mutex = &philo->r_fork->mutex_fork;
+		else
+			fork_mutex = &philo->l_fork->mutex_fork;
+	}
+	return (fork_mutex);
+}
+
+
 static bool philo_take_fork(t_philosopher *philo, size_t num_fork)
 {
-	t_milisecs	timestamp;
+	t_milisecs		timestamp;
+	pthread_mutex_t *fork_mutex;
 
-	(void)philo;
-	(void)num_fork;
+	fork_mutex = philo_determine_fork(philo, num_fork);
+	if (pthread_mutex_lock(fork_mutex) < 0)
+	{
+		simulation_force_stop(philo->mtx_run_sim);
+		return (false);
+	}
 	if (!get_timestamp(&timestamp))
 		return (ft_putendl(STDERR_FILENO, "ERROR AT get_timestamp."), false);
 	printer_write(philo, timestamp - philo->time_of_start, "has taken a fork");
@@ -33,13 +61,14 @@ static bool philo_take_fork(t_philosopher *philo, size_t num_fork)
 
 static bool philo_leave_fork(t_philosopher *philo, size_t num_fork)
 {
-	//t_milisecs	timestamp;
+	pthread_mutex_t *fork_mutex;
 
-	(void)philo;
-	(void)num_fork;
-//	if (!get_timestamp(&timestamp))
-//		return (ft_putendl(STDERR_FILENO, "ERROR AT get_timestamp."), false);
-//	printer_write(philo, timestamp - philo->time_of_start, "has taken a fork");
+	fork_mutex = philo_determine_fork(philo, num_fork);
+	if (pthread_mutex_unlock(fork_mutex) < 0)
+	{
+		simulation_force_stop(philo->mtx_run_sim);
+		return (false);		
+	}
 	return (true);	
 }
 
@@ -49,6 +78,8 @@ static bool	philo_eating_time(t_philosopher *philo)
 	
 	if (!get_timestamp(&timestamp))
 		return (ft_putendl(STDERR_FILENO, "ERROR AT get_timestamp."), false);
+	if (!philo_change_time_last_meal(&philo->mtx_time_last_eat, timestamp))
+		return(false);
 	printer_write(philo, timestamp - philo->time_of_start, "is eating");
 	threads_sleep(philo->rules->time_to_eat * 1000);
 	return (true);

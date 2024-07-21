@@ -6,12 +6,14 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 23:28:36 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/21 00:36:15 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/21 23:50:37 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 #include "simulation.h"
+
+#include <stdio.h>
 
 void	*philo_life(void * arg)
 {

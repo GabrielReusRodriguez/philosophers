@@ -12,17 +12,18 @@ INC_DIR = ./inc
 SRC_FILES =		args				\
 				fork_utils			\
 				main				\
+				philo_die			\
 				philo_eat			\
 				philo_life			\
 				philo_mutex			\
 				philo_sleep			\
 				philo_think			\
 				philo_utils			\
-				philo				\
 				printer				\
 				rules				\
-				simultion_mutex		\
+				simulation_mutex	\
 				simulation_utils	\
+				supervisor			\
 				threads				\
 				timestamp			\
 				utils

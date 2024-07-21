@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 21:53:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/21 00:35:19 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/21 22:45:50 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void	*philo_life(void * arg);
 bool	philo_eat(t_philosopher *philo);
 bool	philo_sleep(t_philosopher *philo);
 bool	philo_think(t_philosopher *philo);
+bool	philo_die(t_philosopher *philo);
 bool	philo_inc_num_meal(t_mutex_sizet *mtx_num_meal);
 bool	philo_change_time_last_meal(t_mutex_milisec *mtx_time, t_milisecs ms);
+
 
 #endif
