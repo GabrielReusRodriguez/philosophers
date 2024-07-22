@@ -41,11 +41,11 @@ DEP = $(addsuffix .d, $(addprefix ${OBJ_DIR}/, ${SRC_FILES}))
 all: $(NAME)
 
 $(NAME): ${OBJ} 
-	cc ${OBJ} -o ${NAME}
+	cc ${OBJ} ${CSANITIZE} -o ${NAME}
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c Makefile
 	@mkdir -p ${OBJ_DIR}
-	cc $(CFLAGS) ${CSANITIZE} -I ${INC_DIR} -c $< -o $@
+	cc $(CFLAGS) ${DEPFLAGS} -I ${INC_DIR} -c $< -o $@
 
 clean:
 	rm -f $(OBJ_DIR)/*.o

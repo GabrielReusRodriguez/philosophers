@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 23:38:05 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 19:52:15 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/23 00:34:18 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ void	simulation_destroy(t_simulation *simulation)
 {
 	forks_destroy(simulation, simulation->rules.number_of_philos);
 	philos_destroy(simulation, simulation->rules.number_of_philos);
+	if (pthread_mutex_unlock(&simulation->mutex_print) < 0)
+		ft_putendl(STDERR_FILENO, "ERROR: Error unlocking mutex of print.");
 	if (pthread_mutex_destroy(&simulation->mutex_print) < 0)
 		ft_putendl(STDERR_FILENO, "ERROR: Error destroying mutex of print.");
+	if (pthread_mutex_unlock(&simulation->mtx_run.mutex) < 0)
+		ft_putendl(STDERR_FILENO, "ERROR: Error unlocking mutex of end.");
 	if (pthread_mutex_destroy(&simulation->mtx_run.mutex) < 0)
 		ft_putendl(STDERR_FILENO, "ERROR: Error destroying mutex of end.");
 }

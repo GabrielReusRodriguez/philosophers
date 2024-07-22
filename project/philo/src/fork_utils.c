@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 20:59:46 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 19:30:35 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/23 00:31:20 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ bool	forks_init(t_simulation *simulation)
 
 static bool	fork_destroy(t_fork	*fork)
 {
+	if (pthread_mutex_unlock(&fork->mutex_fork) < 0)
+	{
+		ft_putendl(STDERR_FILENO, "ERROR: Error destroying mutex 1");
+		return (false);
+	}
 	if (pthread_mutex_destroy(&fork->mutex_fork) < 0)
 	{
 		ft_putendl(STDERR_FILENO, "ERROR: Error destroying mutex");
@@ -66,11 +71,14 @@ bool	forks_destroy(t_simulation *simulation, size_t	total)
 	size_t	i;
 
 	i = 0;
-	while (i < total)
+	if (simulation->forks != NULL)
 	{
-		fork_destroy(&simulation->forks[i]);
-		i++;
+		while (i < total)
+		{
+			fork_destroy(&simulation->forks[i]);
+			i++;
+		}
+		simulation->forks = ft_free(simulation->forks);
 	}
-	ft_free(simulation->forks);
 	return (true);
 }

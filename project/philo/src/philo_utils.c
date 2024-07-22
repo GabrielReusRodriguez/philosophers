@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:39:35 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/20 23:52:09 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/23 00:36:08 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,26 @@ bool	philos_init(t_simulation *simulation)
 
 static	bool	philo_destroy(t_philosopher *philo)
 {
+
+	if (pthread_mutex_unlock(&philo->mtx_time_last_eat.mutex) < 0)
+	{
+		ft_putendl(STDERR_FILENO, "ERROR: Error at mutex unlock.");
+		//return (false);
+	}
 	if (pthread_mutex_destroy(&philo->mtx_time_last_eat.mutex) < 0)
 	{
 		ft_putendl(STDERR_FILENO, "ERROR: Error at mutex destroy.");
-		return (false);
+		//return (false);
+	}
+	if (pthread_mutex_unlock(&philo->mtx_num_meals.mutex) < 0)
+	{
+		ft_putendl(STDERR_FILENO, "ERROR: Error at mutex unlock.");
+		//return (false);
 	}
 	if (pthread_mutex_destroy(&philo->mtx_num_meals.mutex) < 0)
 	{
 		ft_putendl(STDERR_FILENO, "ERROR: Error at mutex destroy.");
-		return (false);
+		//return (false);
 	}
 	return (true);
 }
@@ -94,11 +105,14 @@ bool	philos_destroy(t_simulation *simulation, size_t total)
 	size_t	i;
 
 	i = 0;
-	while (i < total)
+	if (simulation->philos != NULL)
 	{
-		philo_destroy(simulation->philos + i);
-		i++;
+		while (i < total)
+		{
+			philo_destroy(simulation->philos + i);
+			i++;
+		}
+		simulation->forks = ft_free (simulation->philos);
 	}
-	ft_free (simulation->philos);
 	return (true);
 }

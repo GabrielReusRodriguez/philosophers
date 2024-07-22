@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:27:26 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/19 21:22:17 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/23 00:28:51 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ int		ft_strlen(const char *arg);
 void	ft_putstr(int fd, const char * str);
 void	ft_putendl(int fd, const char * str);
 size_t	ft_atou(const char *arg);
-void	ft_free(void *ptr);
+void	*ft_free(void *ptr);
 
 #endif

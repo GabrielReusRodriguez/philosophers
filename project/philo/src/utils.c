@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:28:27 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/19 22:30:11 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/23 00:28:47 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ size_t	ft_atou(const char *arg)
 	return (value);
 }
 
-void	ft_free(void *ptr)
+void	*ft_free(void *ptr)
 {
 	if (ptr != NULL)
 	{
 		free (ptr);
-		ptr = NULL;
 	}
+	return (NULL);
 }

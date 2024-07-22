@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:48:45 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/21 23:48:04 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/23 00:32:23 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 #include "utils.h"
 #include "timestamp.h"
 
+#include <stdio.h>
 
 static bool supervisor_check_philo(t_philosopher *philo, t_milisecs ms, \
-				bool *philo_dead)
+				bool *philo_dead, bool *everybody_ate)
 {	
+	size_t	num_meals;
 	*philo_dead = false;
 	if(pthread_mutex_lock(&philo->mtx_time_last_eat.mutex) < 0)
 		return (ft_putendl(STDERR_FILENO, "ERROR: Error locking last eat"), \
@@ -32,24 +34,30 @@ static bool supervisor_check_philo(t_philosopher *philo, t_milisecs ms, \
 	if (pthread_mutex_unlock(&philo->mtx_time_last_eat.mutex) < 0)
 		return (ft_putendl(STDERR_FILENO, "ERROR: Error unlocking last eat"), \
 				false);
+	if (philo->rules->number_of_meals > 0 && *everybody_ate)
+	{
+		if (!philo_get_num_meal(&philo->mtx_num_meals, &num_meals))
+			return (false);
+		if (num_meals < philo->rules->number_of_meals)
+			*everybody_ate = false;
+	}
 	return (true);
 }
 
-#include <stdio.h>
 
 static bool	supervisor_check_philos(t_simulation *simulation, t_milisecs ms)
 {
 	size_t			i;
 	t_philosopher	*philo;
-	bool			everybody_ate_n_times;
+	bool			everybody_ate;
 	bool			philo_dead;
 	
 	i = 0;
-	everybody_ate_n_times = true;
+	everybody_ate = true;
 	while (i < simulation->rules.number_of_philos)
 	{
 		philo = &simulation->philos[i];
-		if (!supervisor_check_philo(philo, ms, &philo_dead))
+		if (!supervisor_check_philo(philo, ms, &philo_dead, &everybody_ate))
 			return (false);
 		if (philo_dead)
 		{
@@ -58,12 +66,10 @@ static bool	supervisor_check_philos(t_simulation *simulation, t_milisecs ms)
 			simulation_force_stop(&simulation->mtx_run);
 			return (true);
 		}
-		if (simulation->rules.number_of_meals > 0)
-			everybody_ate_n_times = false;
 		i++;
 	}
-	if (simulation->rules.number_of_meals > 0 && everybody_ate_n_times)
-		simulation_stop(&simulation->mtx_run);
+	if (simulation->rules.number_of_meals > 0 && everybody_ate)
+		simulation_force_stop(&simulation->mtx_run);
 	return (true);
 }
 
@@ -73,8 +79,6 @@ bool	supervisor_gettimestamp(t_milisecs *ms)
 		return (ft_putendl(STDERR_FILENO, "ERROR AT get_timestamp."), false);	
 	return (true);
 }
-
-#include <stdio.h>
 
 bool	supervisor_checks(t_simulation *simulation)
 {
@@ -104,7 +108,8 @@ bool	supervisor_checks(t_simulation *simulation)
 		if (!threads_sleep(SUPERVISOR_SLEEP_USECS))
 			return (simulation_force_stop(&simulation->mtx_run), false);
 		if (!simulation_is_running(&simulation->mtx_run, &run))
-		return (false);
+			return (false);
 	}
+	forks_destroy(simulation, simulation->rules.number_of_philos);
 	return (true);
 }
